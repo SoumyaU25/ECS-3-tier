@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PinkPulse Todo</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #1a001f, #2b0033, #3d0052);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial;
+      color: white;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 20px;
+      width: 400px;
+      box-shadow: 0 0 20px rgba(255, 0, 150, 0.6);
+      text-align: center;
+    }
+
+    h1 {
+      background: linear-gradient(to right, #ff4ecd, #a100ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    input {
+      padding: 10px;
+      width: 70%;
+      border-radius: 10px;
+      border: none;
+      margin-top: 15px;
+    }
+
+    button {
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(to right, #ff4ecd, #a100ff);
+      color: white;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    li {
+      padding: 5px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+    <h1>PinkPulse Todo</h1>
+
+    <input type="text" id="taskInput" placeholder="Enter task">
+    <button onclick="addTodo()">Add</button>
+
+    <ul id="todoList"></ul>
+  </div>
+
+  <script>
+    const apiUrl = "/api/todos";
+
+    function loadTodos() {
+      fetch(apiUrl)
+        .then(res => res.json())
+        .then(data => {
+          const list = document.getElementById("todoList");
+          list.innerHTML = "";
+          data.forEach(todo => {
+            const li = document.createElement("li");
+            li.textContent = todo.task;
+            list.appendChild(li);
+          });
+        });
+    }
+
+    function addTodo() {
+      const task = document.getElementById("taskInput").value;
+
+      fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ task })
+      }).then(() => {
+        document.getElementById("taskInput").value = "";
+        loadTodos();
+      });
+    }
+
+    loadTodos();
+  </script>
+
+</body>
+</html>
