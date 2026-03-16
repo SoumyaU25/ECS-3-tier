@@ -8,11 +8,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
-            steps {
-                git 'https://github.com/SoumyaU25/ECS-3-tier.git'
-            }
-        }
 
         stage('Build Backend Image') {
             steps {
