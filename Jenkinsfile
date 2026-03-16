@@ -54,12 +54,12 @@ pipeline {
                 sh '''
                 aws ecs update-service \
                 --cluster app-ecs-cluster \
-                --service ecs-service-2-BackendService \
+                --service ecs-service-2-BackendService-pOievtMqcgNl \
                 --force-new-deployment
 
                 aws ecs update-service \
                 --cluster app-ecs-cluster \
-                --service ecs-service-2-FrontendService \
+                --service ecs-service-2-FrontendService-cVUnMHAog2s1 \
                 --force-new-deployment
                 '''
             }
